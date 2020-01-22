@@ -22,7 +22,6 @@ FSJS project 2 - List Filter and Pagination
    // list.getElementsByClassName("student-item")[30].style.backgroundColor = "red";
 
 
-
 /*** 
    Create the `showPage` function to hide all of the items in the 
    list except for the ten you want to show.
@@ -38,58 +37,58 @@ FSJS project 2 - List Filter and Pagination
        "invoke" the function 
 ***/
 
+
+
 const list = document.querySelector('.student-list');
 const listItemChildren = list.children;
+
 const maxPage = 10;
-const pageNum = Math.ceil(listItemChildren.length/maxPage);
-let startIndex = 0;
-let endIndex = maxPage;
 
-function range(start, end) {
-   return Array(end - start + 1).fill().map((_, idx) => start + idx)
- }
- var result = range(1, pageNum); 
+const showPage = (listItemChildren, pageNum ) => {
+   let startIndex = (pageNum * maxPage) - maxPage;
+   let endIndex = pageNum * maxPage;
 
-const showPage = (pageNum, listItemChildren) => {
    for (let i = 0; i < listItemChildren.length; i ++) {
-      if ((i >= startIndex  )  && (i <= endIndex ) ) {
+      if (( i >= startIndex)  && (i <= endIndex )) {
          listItemChildren[i].style.display = 'block';
             } else {
                listItemChildren[i].style.display = 'none';
             } 
-         } 
-};
+         }
+      };              
 
-showPage (pageNum, listItemChildren);    
+let pageNum = Math.ceil(listItemChildren.length/maxPage);
 
-const appendPageLinks = (list) => {
+const appendPageLinks = (listItemChildren) => {
    const div = document.createElement( 'div' );
    const ul = document.createElement( 'ul' );
    div.className = 'pagination';
    document.querySelector('.page').appendChild(div);
    document.querySelector('.pagination').appendChild(ul);
-   for (let i = 0; i < pageNum; i++) {
-      const li = document.createElement( 'li' );
-      li.innerHTML="<a href=''>"+ result[i] +"</a>";
-      ul.appendChild(li);
-   };  
-   const btn1  = document.getElementsByTagName('a')[4];
-   btn1.style.backgroundColor = "red";
-   startIndex = startIndex +11;
-   endIndex = maxPage + 11;
-   console.log(startIndex, endIndex);
 
-   // btn1.addEventListener('click', showPage() {
-   //    if ((i >= startIndex )  && (i <= endIndex )) {
-   //       listItemChildren[i].style.display = 'block';
-   //  }};
-}; appendPageLinks(list);
+   for (let i = 1; i <= pageNum; i++) {
+      const li = document.createElement( 'li' );
+      li.innerHTML="<a href=''>"+ i +"</a>";
+      ul.appendChild(li);
+      };  
+      
+      const btn4 = document.getElementsByTagName('a')[1];
+         btn4.addEventListener('click',  () => { 
+            showPage(listItemChildren, 2); 
+         });   
+   }; 
+
+appendPageLinks(listItemChildren);
+showPage(listItemChildren, 1);
+
+
 
 
 
 
 // 5. ​Add an event listener to each a​ ​ tag. When they are clicked
 // ​call the showPage function to display the appropriate page
+
 // 6. Loop over pagination links to remove active class from all links
 // 7. Add the active class to the link that was just clicked. You can identify that
 // clicked link using ​event.target
