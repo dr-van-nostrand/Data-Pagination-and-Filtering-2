@@ -41,7 +41,6 @@ FSJS project 2 - List Filter and Pagination
 
 const list = document.querySelector('.student-list');
 const listItemChildren = list.children;
-
 const maxPage = 10;
 
 const showPage = (listItemChildren, pageNum ) => {
@@ -49,7 +48,7 @@ const showPage = (listItemChildren, pageNum ) => {
    let endIndex = pageNum * maxPage;
 
    for (let i = 0; i < listItemChildren.length; i ++) {
-      if (( i >= startIndex)  && (i <= endIndex )) {
+      if (( i >= startIndex)  && (i < endIndex )) {
          listItemChildren[i].style.display = 'block';
             } else {
                listItemChildren[i].style.display = 'none';
@@ -58,25 +57,29 @@ const showPage = (listItemChildren, pageNum ) => {
       };              
 
 let pageNum = Math.ceil(listItemChildren.length/maxPage);
-
 const appendPageLinks = (listItemChildren) => {
    const div = document.createElement( 'div' );
    const ul = document.createElement( 'ul' );
+
    div.className = 'pagination';
    document.querySelector('.page').appendChild(div);
    document.querySelector('.pagination').appendChild(ul);
 
    for (let i = 1; i <= pageNum; i++) {
-      const li = document.createElement( 'li' );
-      li.innerHTML="<a href=''>"+ i +"</a>";
+      const li = document.createElement('li'); 
+      // const a = document.createElement('a')
+      li.innerHTML="<a href='#'>"+ i +"</a>";
       ul.appendChild(li);
-      };  
-      
-      const btn4 = document.getElementsByTagName('a')[1];
-         btn4.addEventListener('click',  () => { 
-            showPage(listItemChildren, 2); 
-         });   
+
+   };  
+
+   for (let i = 0; i < pageNum ; i++) {
+      const btn = document.getElementsByTagName('a')[i];
+            btn.addEventListener('click',() => {
+               showPage(listItemChildren, 1 + i);
+         });      
    }; 
+}; 
 
 appendPageLinks(listItemChildren);
 showPage(listItemChildren, 1);
