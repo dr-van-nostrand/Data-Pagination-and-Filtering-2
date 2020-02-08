@@ -20,7 +20,11 @@ const searchNames = (searchInput, names) => {
     names[i].style.display = 'none';
 		if (searchInput.length != 0 && names[i].textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
 			names[i].style.display = 'block';
-		}
+    } 
+    // else {
+    //   let message = document.querySelector('.student-list');
+    //   message.innerHTML = 'no data to be shown'
+    // }
   } 
 };
 
