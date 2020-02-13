@@ -2,7 +2,6 @@ const list = document.querySelector('.student-list');
 const listItemChildren = list.children;
 const maxPage = 10;
 const pageDiv = document.querySelector(".page");
-const pageNum = Math.ceil(listItemChildren.length / maxPage);
 
 // ShowPage Function
 const showPage = (list, page) => {
@@ -50,13 +49,15 @@ function searchNames(list) {
 	let searchStudents = [];
 	for (let i = 0; i < list.length; i++) {
 		list[i].style.display = 'none';
-		if (searchField.value.length != 0 && list[i].querySelector('h3').textContent.toLowerCase().includes(searchField.value.toLowerCase())) {
+		if (searchField.length != 0 && list[i].querySelector('h3').textContent.toLowerCase().includes(searchField.value.toLowerCase())) {
 			searchStudents.push(list[i]);
 		}
 	}
 	if (searchStudents.length === 0) {
 		noResultMessage.style.display = 'block';
 		noResultDiv.style.display = 'block';
+		let removePag = document.querySelector(".pagination");
+		removePag.style.display = 'none';
 	} else {
 		noResultDiv.style.display = 'none';
 		showPage(searchStudents, 1);
@@ -66,12 +67,12 @@ function searchNames(list) {
 
 //Append Page Links Funtion
 const appendPageLinks = (list) => {
+	const pageNum = Math.ceil(list.length / maxPage);
 	const paginationDiv = document.getElementsByClassName('pagination');
 	if (paginationDiv.length != 0) {
 		let removeDiv = document.querySelector(".pagination");
 		pageDiv.removeChild(removeDiv);
 	}
-	
 	const div = document.createElement('div');
 	div.className = 'pagination';
 	const ul = document.createElement('ul');
@@ -84,25 +85,16 @@ const appendPageLinks = (list) => {
 		ul.firstElementChild.firstElementChild.className = 'active';
 	}
 	for (let i = 0; i < pageNum; i++) {
-		const btn = document.getElementsByTagName('a')[i];
-		btn.addEventListener('click', function(event) {
-			event.preventDefault(showPage(list, 1 + i));
-		});
-	}
-	for (let i = 0; i < pageNum; i++) {
 		let btns = document.getElementsByTagName('a')[i];
 		btns.addEventListener("click", function(e) {
 			const clicked = document.getElementsByClassName('active')
-			// // If there's no active class
 			if (clicked.length > 0) {
 				clicked[0].className = clicked[0].className.replace('active', "");
 			}
-			// // Add the active class to the current/clicked button
 			e.target.classList.add("active");
 			showPage(list, e.target.textContent);
 		})
 	}
 }
-
 showPage(listItemChildren, 1);
 appendPageLinks(listItemChildren);
